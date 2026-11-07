@@ -1,0 +1,23 @@
+ticket_id,source_record_id,reported_at,work_type,description,development,building,borough,elevator_asset_id,source_priority,no_service,senior_building,hazard_confirmed
+T-1001,SEED-9001,2026-11-05 05:40,Elevator outage,Elevator not running and no other car in the building,Demo Houses A,Bldg 1,Brooklyn,BK-A1-E1,2,Y,Y,N
+T-1002,SEED-9002,2026-11-05 05:55,Elevator outage,Car stopped between floors with passenger inside (confirmed by FDNY call-in),Demo Houses A,Bldg 2,Brooklyn,BK-A2-E1,1,Y,N,Y
+T-1003,SEED-9003,2026-11-05 06:10,Door fault,Door will not close fully on 4th floor,Demo Houses B,Bldg 1,Brooklyn,BK-B1-E2,3,N,N,N
+T-1004,SEED-9004,2026-11-05 06:20,Degraded operation,Elevator is very slow and jerks when stopping,Demo Houses B,Bldg 2,Brooklyn,BK-B2-E1,4,N,N,N
+T-1005,SEED-9005,2026-11-05 06:25,Elevator outage,Elevator out; second elevator in building is working,Demo Houses B,Bldg 3,Brooklyn,BK-B3-E1,3,N,N,N
+T-1006,SEED-9006,2026-11-05 06:50,Elevator outage,Resident reports elevator stuck on 7th floor; nobody confirmed inside,Demo Houses C,Bldg 1,Brooklyn,BK-C1-E1,2,N,N,N
+T-1007,SEED-9007,2026-11-05 07:00,Elevator outage,Lobby car out of service,Demo Houses C,Bldg 2,Brooklyn,BK-C2-E1,3,N,N,N
+T-1009,SEED-9009,2026-11-05 07:10,Elevator outage,Elevator still not working (second call about same car),Demo Houses A,Bldg 1,Brooklyn,BK-A1-E1,2,Y,Y,N
+T-1011,SEED-9011,2026-11-05 06:00,Elevator outage,Elevator out of service; senior building,Demo Houses D,Bldg 1,Bronx,BX-D1-E1,2,Y,Y,N
+T-1012,SEED-9012,2026-11-05 06:30,Door fault,Door sensor fault,Demo Houses D,Bldg 2,Bronx,BX-D2-E1,3,N,N,N
+T-1013,SEED-9013,2026-11-05 07:20,Elevator outage,Elevator out; other car running,Demo Houses D,Bldg 3,Bronx,BX-D3-E1,3,N,N,N
+T-1014,SEED-9014,2026-11-05 07:25,Degraded operation,Intermittent stopping between floors but car is moving,Demo Houses D,Bldg 4,Bronx,BX-D4-E1,4,N,N,N
+T-1015,SEED-9015,2026-11-04 15:00,Planned maintenance,Quarterly preventive maintenance due,Demo Houses D,Bldg 1,Bronx,BX-D1-E2,5,N,N,N
+T-1016,SEED-9016,2026-11-05 06:05,Elevator outage,Only elevator out of service,Demo Houses E,Bldg 1,Manhattan,MH-E1-E1,2,Y,N,N
+T-1017,SEED-9017,2026-11-05 06:40,Door fault,Door reopening repeatedly,Demo Houses E,Bldg 2,Manhattan,MH-E2-E1,3,N,N,N
+T-1018,SEED-9018,2026-11-04 15:30,Planned maintenance,Annual inspection prep,Demo Houses E,Bldg 3,Manhattan,MH-E3-E1,5,N,N,N
+T-1019,SEED-9019,2026-11-05 06:15,Elevator outage,Elevator out; other car running,Demo Houses F,Bldg 1,Queens,QN-F1-E1,3,N,N,N
+T-1020,SEED-9020,2026-11-05 07:00,Degraded operation,Elevator makes loud noise,Demo Houses F,Bldg 2,Queens,QN-F2-E1,4,N,N,N
+T-1021,SEED-9021,2026-11-05 06:45,Elevator outage,Fire alarm activated; smoke in elevator lobby (confirmed),Demo Houses G,Bldg 1,Staten Island,SI-G1-E1,1,Y,N,Y
+T-1022,SEED-9022,2026-11-05 07:30,Door fault,Door stuck open,Demo Houses E,Bldg 4,,MH-E4-E1,3,N,N,N
+,SEED-9023,2026-11-05 07:35,Elevator outage,Elevator out of service,Demo Houses B,Bldg 4,Brooklyn,BK-B4-E1,3,N,N,N
+T-1011,SEED-9011,2026-11-05 06:00,Elevator outage,Elevator out of service; senior building,Demo Houses D,Bldg 1,Bronx,BX-D1-E1,2,Y,Y,N
