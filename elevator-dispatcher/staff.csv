@@ -1,0 +1,11 @@
+tech_id,name,role,active,attendance_state,shift_start,shift_end,authorized_boroughs,depot,float_helper,certification_status,certification_expiry
+M1,Mechanic A,Mechanic,Y,PRESENT,08:00,16:00,Brooklyn,Depot BK,N,DEMO-CONFIGURED,2027-06-30
+M2,Mechanic B,Mechanic,Y,PRESENT,09:00,17:00,Brooklyn,Depot BK,N,DEMO-CONFIGURED,2027-06-30
+M3,Mechanic C,Mechanic,Y,PRESENT,08:00,17:00,Bronx,Depot BX,N,DEMO-CONFIGURED,2027-03-31
+M4,Mechanic D,Mechanic,Y,PRESENT,08:00,17:00,Manhattan,Depot MH,N,DEMO-CONFIGURED,2027-03-31
+M5,Mechanic E,Mechanic,Y,ABSENT,08:00,16:00,Queens,Depot QN,N,DEMO-CONFIGURED,2027-03-31
+H1,Helper A,Helper,Y,PRESENT,08:00,12:00,Brooklyn,Depot BK,N,DEMO-CONFIGURED,2027-06-30
+H2,Helper B,Helper,Y,PRESENT,08:00,17:00,Bronx,Depot BX,N,DEMO-CONFIGURED,2027-03-31
+H3,Helper C,Helper,Y,PRESENT,08:00,17:00,Manhattan,Depot MH,N,EXPIRED,2026-09-30
+H4,Float Helper,Helper,Y,PRESENT,08:00,17:00,Brooklyn|Bronx|Manhattan|Queens,Float pool,Y,DEMO-CONFIGURED,2027-06-30
+H5,Helper E,Helper,Y,UNKNOWN,08:00,16:00,Queens,Depot QN,N,UNVERIFIED,
