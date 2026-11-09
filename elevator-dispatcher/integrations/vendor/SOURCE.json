@@ -1,0 +1,8 @@
+{
+  "repository": "Racheal-Winstead/Elevator-Dispatch",
+  "commit": "6aff6485ae97a8166beaf15678fa3bbf3f0edbb3",
+  "path": "elevator-dispatcher/engine.py",
+  "blob_sha": "6b13cc6f121b65036eb8e78663546dbe409b9ee2",
+  "sha256": "18b81cd93b89b17906d81f34254c21ff6f3a2faf93234910348409ba14b93b48",
+  "treatment": "Unmodified upstream source; adapter calls scheduling functions only. No upstream app, messaging or source-switch code is run."
+}

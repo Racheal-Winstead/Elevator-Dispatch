@@ -1,0 +1,13 @@
+{
+  "python": "3.14.7",
+  "os": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "tickets": 50,
+  "resources": 10,
+  "runs": 10,
+  "median_seconds": 0.646177250018809,
+  "max_seconds": 0.6720905000111088,
+  "recommendations": 8,
+  "exceptions": 42,
+  "scope": "Pinned-engine data adapter computation only; excludes fetch and UI"
+}
