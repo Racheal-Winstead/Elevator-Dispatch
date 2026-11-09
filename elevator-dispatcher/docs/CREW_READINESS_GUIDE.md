@@ -37,4 +37,4 @@ The current unit suite passed 46 tests, including negative cases for partial cre
 
 ## Review before presenting
 
-Confirm the target presentation date with the team. Obtain the actual JD and review the local adapter contract with Deshawn. Do not call the current demo rules NYCHA policy. Use fictional data only. Rehearse with local internet-independent fixtures and capture a backup recording.
+Confirm the target presentation date with the team. Use the preserved original JD (Job ID 647208) for the feature mapping and review the local adapter contract with Deshawn. Do not call the current demo rules NYCHA policy. Use fictional data only. Rehearse with local internet-independent fixtures and capture a backup recording.

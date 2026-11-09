@@ -1,35 +1,45 @@
-# Five-minute Pursuit demonstration
+# Working-demo recording — 2½ minutes
 
-Before presenting: start the local server, use the current synthetic day, reset the schedule through the confirmation control if needed, and open Crew readiness. Confirm the Monday date/time with the team. Keep a screenshot/recording backup. No actual JD has been supplied.
+This replaces the earlier five-minute live-app walkthrough. The coach material supplied by Racheal calls for a 2½-minute working-demo video plus a 2½-minute deck, five minutes combined, submitted by Wednesday, November 11 at noon. The form link and any later coach changes still need confirmation. A separate Monday milestone from the PRD has not been confirmed.
 
-**0:00–0:35 — Frame the problem and your ownership.**
+Before recording: use a current synthetic-day board, rehearse with fictional personnel only, and reset through the app’s confirmation control if necessary. Prepare ED-001 for an eligible proposal, ED-002 for hazard review, and ED-011 for incomplete data. Confirm those fixtures and visible outcomes during rehearsal; do not record a failed or unexpected sequence as a successful action.
 
-“Dispatchers need to turn work into a complete crew and carry unresolved work to the next shift. I built roster readiness, the dispatcher console and QA. These are fictional staff and work orders. The banner tells you this is DEMO SEED. Maximo, REMS and emergency dispatch are not connected.”
+## 0:00–0:20 — Role and source
 
-**0:35–1:20 — Make eligibility visible.**
+Show the source disclosure and console.
 
-Show a selected work order and its window. Point to PRESENT, ABSENT and UNKNOWN attendance. Find T10, the float helper. “A float helper still needs the right authorization, shift and qualification. Our displayed policies are demo-configured, pending operations approval.” Readiness is individual, not a committed complete crew.
+“This is our Elevator Dispatcher workbench, inspired by NYCHA Job ID 647208. The role dispatches teams and keeps accurate records. This demo uses fictional tickets and personnel. It is not connected to Maximo, live staffing or emergency dispatch.”
 
-**1:20–2:00 — Review the queue.**
+## 0:20–0:45 — Accuracy before assignment
 
-Search a fictional numeric work-order reference, then show the missing-building case and ED-002 hazard review. “The reported word ‘stuck’ does not establish a confirmed emergency. The dispatcher must verify and follow the applicable approved procedure. We keep incomplete work visible.”
+Open Work queue, show ED-011’s missing building and ED-002’s review hold.
 
-**2:00–3:00 — Explain and commit a complete crew.**
+“Accuracy starts before assignment. Incomplete work stays visible for review. Reported hazard wording does not automatically confirm an emergency. These holds keep the dispatcher aware of what still needs checking.”
 
-Choose a ticket with a recommendation. Show both crew members, time and explanation. “My adapter converts our demo data for a pinned copy of Deshawn’s engine, then validates its returned crew. It checks only the local board; this is not yet a merged team application.” Enter the decision reason, confirm review and save. Show ASSIGNED and the committed crew. No field message has been sent.
+## 0:45–1:25 — Readiness, proposal and decision
 
-**3:00–3:40 — Show the useful refusal.**
+Show readiness briefly, then ED-001’s Dispatch plan. Point to UNKNOWN attendance or explain its exclusion, show the complete proposed crew, enter the decision reason, check confirmation and save.
 
-In manual assignment, try a single mechanic. Show rejection and the preserved schedule. Show a critical case without available complete capacity. “We leave an exception instead of forcing an invalid crew. Human escalation is recorded locally; we do not automate emergency response or displace another crew.” If time is tight, explain the collision test rather than navigating another form.
+“The roster shows attendance, shifts and demo qualifications. Unknown attendance is excluded. My adapter translates our records for a pinned copy of Deshawn’s engine. The returned crew is checked against local rules and commitments. It remains a proposal until I review the crew and time window and confirm the assignment. The entire required crew is saved together.”
 
-**3:40–4:25 — Carry progress forward.**
+## 1:25–2:00 — Activity and follow-up
 
-For the assigned ticket, record ACKNOWLEDGED or BLOCKED with responsible owner, next action and reason. A blocked update needs blocker details. Show its activity. “RESTORED means service is reported back; CLOSED is a separate recordkeeping decision. Every update here is entered by the dispatcher.”
+Track the committed ticket. Save ACKNOWLEDGED with a responsible owner, next action and reason; show its activity entry.
 
-**4:25–5:00 — Hand over and name the next boundary.**
+“Dispatching is only part of the job. I can record a reported update, its responsible owner and the next action. This is dispatcher-entered information, not a live message from a field device. The activity history records who made the change and when.”
 
-Show open work and download Shift handover CSV. “The next shift gets crew, status, owner, last update, blocker and next action. Reset requires confirmation and retains history. Next we review this local compatibility layer together, agree shared storage and approved inputs, and validate the remaining operational rules. This is a demonstrated slice, not the full P0 release.”
+## 2:00–2:30 — Handover and boundary
 
-## Avoid claims you cannot support
+Show Shift handover and download the CSV.
 
-Do not claim live scheduling, real certifications, official NYCHA pairing policy, Maximo write-back, remote telemetry, emergency dispatch, repair-time savings, complete PRD delivery or verified JD alignment. Use measured local computation results only with their environment and scope. No automatic 90-minute rule is enforced.
+“The next shift can see recorded crew, status, blocker and follow-up in one handover. These are local demonstration reports, not Maximo reports. We support crew coordination and selected work-activity records; approved Maximo integration, authoritative elevator-performance history and equipment maintenance remain outside this working slice.”
+
+## Rehearsal checklist
+
+- Keep the video at or below 2½ minutes; do not rush past unreadable screens.
+- Use a prepared valid ticket rather than spending time finding one.
+- Show one actual confirmed assignment and one actual recorded progress event.
+- Retain the source-mode disclosure. No tenant personal information belongs in the recording.
+- Explain pairing, authorization, qualifications and priority as demo configuration, not NYCHA policy.
+- Do not claim measured time savings, faster repairs, actual field notifications, official Maximo data entry, production readiness or complete delivery of the PRD.
+- Play the saved video before submission; check readable text and audible narration.

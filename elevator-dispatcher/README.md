@@ -25,7 +25,7 @@ Read [the detailed update and proposed commit descriptions](docs/IMPLEMENTATION_
 - Local progress, owner and next action; activity history; CSV assignment, open-work, exception and handover reports; confirmed schedule reset.
 - Clear DEMO SEED disclosure, unknown external commitments and no live system access.
 
-`demo_adapter/fixtures.py` still supplies synthetic tickets. The app now calls `integrations/deshawn_adapter.py`, which translates local data for an unmodified, checksum-verified copy of Deshawn’s `engine.py` at commit `6aff648`. The previous fixture scheduler remains available for historical comparison but is not the app backend. This is local engine compatibility, not a merged team application or agreement to share SQLite. The actual JD remains pending. The repository is Racheal-Winstead/Elevator-Dispatch. PRD research claims were read as supplied context and have not been independently verified.
+`demo_adapter/fixtures.py` still supplies synthetic tickets. The app now calls `integrations/deshawn_adapter.py`, which translates local data for an unmodified, checksum-verified copy of Deshawn’s `engine.py` at commit `6aff648`. The previous fixture scheduler remains available for historical comparison but is not the app backend. This is local engine compatibility, not a merged team application or agreement to share SQLite. The original expired NYCHA posting text (Job ID 647208) was supplied on November 9, 2026 and is preserved in docs/sources/. Its original URL remains unavailable. The repository is Racheal-Winstead/Elevator-Dispatch. PRD research claims were read as supplied context and have not been independently verified.
 
 ## Local state and limits
 
@@ -38,3 +38,7 @@ The Monday milestone needs team confirmation of date and time. No earlier showca
 ## Current local update
 
 46 tests pass, including real pinned-engine adapter tests and the timezone/status regression tests. No Git commit, push or branch change was made for this update. The eventual personal branch is `codex/racheal`; the remote integration branch observed in review is `developer`. Confirm a dedicated repository checkout before staging; this chat folder currently inherits a home-directory Git root.
+
+## JD alignment and assumptions
+
+Read [the original posting text](docs/sources/NYCHA_ELEVATOR_DISPATCHER_647208.txt) and [the six-duty feature mapping](docs/JD_ALIGNMENT.md). The [repository README assumption log](../README.md#assumption-log) records Gap, Assumption, Why and Check for demo policies and design inferences. Structured local records and CSV exports do not implement Maximo data entry or official Maximo reports; hardware maintenance is outside this slice.

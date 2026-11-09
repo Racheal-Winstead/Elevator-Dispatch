@@ -84,10 +84,14 @@ This is decision support in a local demonstration. It neither sends a crew into 
 
 **How do you know it works?** The automated suite exercises negative cases, rollback, determinism, status ownership, display time and queue behavior. Streamlit interaction checks and a browser visual review complement those tests. Passing tests does not establish live operational suitability.
 
-**What comes next?** Review the tested local adapter with Deshawn, agree shared storage, integrate approved data and external commitments, validate operations rules and finish the full P0 release gate. The supplied PRD’s research references still require source verification; the actual JD is pending.
+**What comes next?** Review the tested local adapter with Deshawn, agree shared storage, integrate approved data and external commitments, validate operations rules and finish the full P0 release gate. The supplied PRD’s research references still require source verification; the supplied original JD is now preserved in sources/NYCHA_ELEVATOR_DISPATCHER_647208.txt; its original URL remains unavailable.
 
 ## Why we added a translator
 
 Our `MECHANIC` becomes his `Mechanic`; our `sector` (currently a demo borough) becomes his `borough`; our `priority` becomes his `source_priority`. IDs stay unchanged. CORRECTIVE maps to Elevator outage; INSPECTION maps to Planned maintenance as an explicit demo-only mapping with matching crew roles. The adapter rejects unsupported mappings rather than guessing. It uses UTC clock values on a private engine instance and maps actual overlaps into each trial slot. The database still owns the final decision, with fresh validation inside its transaction.
 
 The two local bugs are fixed: all interval comparisons use timezone-aware UTC instants, and UNASSIGNED requires complete-crew removal. Saving a status alone cannot free a crew.
+
+## Explain the role using its actual JD
+
+Job ID 647208 names dispatching teams, recording elevator/crew activity, Maximo data entry/reporting, data accuracy and equipment maintenance. Our strongest demonstrated connection is coordination and data accuracy, plus selected work-activity records. Maximo integration and equipment maintenance are not implemented. See [JD_ALIGNMENT.md](JD_ALIGNMENT.md) for the complete mapping and the distinction between explicit duties and design inferences.
