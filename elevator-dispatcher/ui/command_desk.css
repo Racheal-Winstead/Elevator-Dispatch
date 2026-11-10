@@ -1,0 +1,24 @@
+:root{--pink:#ae1764;--navy:#171e3b}
+.stApp{background:#faf7f5;color:#171e3b}
+[data-testid="stSidebar"]{background:linear-gradient(160deg,#171e3b,#24304a)}
+[data-testid="stSidebar"] h1{font-size:1.65rem;line-height:1.25}
+.desk-logo{width:64px;color:#fff;margin:0 0 10px}
+.hero{background:linear-gradient(110deg,#fffaf6,#f7f0f5);border:1px solid #e8dde5;border-left:5px solid #ae1764;padding:24px 30px;color:#171e3b;box-shadow:0 5px 22px #41243c06}
+.hero:after{content:none}.hero h1{color:#171e3b;font-size:44px;margin:5px 0;position:relative;z-index:1}.hero p{color:#43506b;font-size:21px;position:relative;z-index:1}.eyebrow{color:#ae1764}
+.hero-badge{margin:14px 0 0;background:#ae1764;color:white;border-radius:6px;position:relative;z-index:1}
+.hero-elevator{position:absolute;right:35px;top:10px;width:100px;color:#ae1764;opacity:.16}
+.hero-elevator:after{content:'';position:absolute;inset:-30px -18px;border-left:1px solid #b86b9233;border-right:1px solid #b86b9233}
+div[data-testid="stMetric"]{border-top-color:#ae1764;box-shadow:0 4px 14px #22213b04}
+[data-baseweb="tab"][aria-selected="true"]{background:#ae1764;color:white!important}
+[data-baseweb="tab"]{border-radius:8px;white-space:nowrap}
+[data-testid="stForm"]{background:#fff;border:1px solid #e8dde5;border-radius:15px;padding:22px;box-shadow:0 4px 18px #41243c05}
+.stButton button[kind="primary"],button[kind="primaryFormSubmit"]{background:#ae1764;border-color:#ae1764;color:white;font-weight:700}
+.ticket-context{border-left-color:#ae1764;box-shadow:0 4px 14px #22213b04}.ticket-context strong{font-size:23px;color:#171e3b}
+.crew-card{border-top:3px solid #b74780;box-shadow:0 5px 20px #41243c06}.crew-avatar{background:#f3e7ef;border-radius:11px;color:#85235c;width:48px;height:48px;font-size:15px}
+.crew-status:before{content:'●';margin-right:5px}.crew-status.blocked:before{content:'–'}
+.proposal-card{min-height:220px}.proposal-card .crew-status{background:#f9e2ef;color:#941257}.proposal-card h3{font-size:21px}
+.assignment-window{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;margin:18px 0;padding:16px 20px;border-radius:12px;background:#f5e8f0;color:#85235c}.assignment-window strong{font-size:16px}
+.progress-panel{background:#fff;border:1px solid #e8dde5;border-radius:15px;padding:18px 22px;margin:18px 0 24px}.progress-panel h4{margin:0 0 18px;color:#171e3b}.progress-panel p{font-size:12px;color:#677085;margin:16px 0 0}
+.progress-strip{display:flex;list-style:none;padding:0;margin:0;gap:0}.progress-strip li{flex:1;position:relative;display:flex;align-items:center;flex-direction:column;gap:8px;font-size:12px;text-align:center;color:#657089}.progress-strip li:before{content:'';position:absolute;top:10px;left:-50%;width:100%;height:2px;background:#d9d4df}.progress-strip li:first-child:before{content:none}.step-dot{position:relative;z-index:1;width:22px;height:22px;border:3px solid #b9b1c6;border-radius:50%;background:#fff;box-sizing:border-box}.progress-strip .current{color:#941257;font-weight:800}.current .step-dot{border:6px solid #ae1764}
+@media(max-width:700px){.hero h1{font-size:30px}.hero p{font-size:17px;max-width:80%}.hero-elevator{right:10px;width:65px}.progress-strip{flex-wrap:wrap;gap:15px}.progress-strip li{flex:1 0 26%}.progress-strip li:before{content:none}.proposal-card{min-height:0}}
+@media(max-width:850px){div[data-testid="stMetric"]{padding:12px} [data-testid="stMetricValue"]{font-size:clamp(18px,3.5vw,30px)}}

@@ -17,6 +17,7 @@ from integrations.deshawn_adapter import recommend, ENGINE_COMMIT
 from time_windows import booked
 from state.audit import Store, now, report, csv_export
 from ui.communication import render as render_communication, handover_draft
+from ui.presentation import ELEVATOR, progress_strip
 
 st.set_page_config(page_title='Elevator Dispatcher | Workbench',page_icon='↕',layout='wide')
 st.markdown("""<style>
@@ -51,6 +52,7 @@ div[data-testid="stMetric"]{background:white;border:1px solid #e6e7ed;border-rad
 @media(max-width:700px){.hero{padding:24px}.hero h1{font-size:29px}.block-container{padding:1rem}.crew-card{min-height:0}}
 </style>""",unsafe_allow_html=True)
 ROOT=Path(__file__).parent
+st.markdown("<style>"+(ROOT/"ui/command_desk.css").read_text()+"</style>",unsafe_allow_html=True)
 st.session_state.store=Store(os.environ.get('WORKBENCH_DB',str(ROOT/'workbench.sqlite3')))
 seed_day=datetime.fromisoformat(st.session_state.store.seed_day())
 demo_windows=slots(seed_day)
@@ -64,7 +66,9 @@ store=st.session_state.store; tickets=st.session_state.tickets
 overrides=store.setting('attendance',{})
 roster=[replace(p,attendance=overrides.get(p.technician_id,p.attendance)) for p in st.session_state.roster]
 with st.sidebar:
-    st.title('↕ Dispatch\nCommand Desk')
+    st.markdown('<div class="desk-logo">'+ELEVATOR+'</div>',unsafe_allow_html=True)
+    st.title('Elevator Dispatcher')
+    st.caption('Dispatch Command Desk')
     st.caption('Racheal Winstead • Product Operations & QA')
     actor=st.text_input('Dispatcher name / demo alias','Demo dispatcher')
     st.divider()
@@ -79,7 +83,7 @@ with st.sidebar:
         st.rerun()
     st.caption('Combined candidate · One local database for assignments, messages, replies, progress and history.')
 
-st.markdown('<div class="hero"><span class="hero-badge">SYNTHETIC DEMONSTRATION · NOT LIVE DISPATCH</span><div class="eyebrow">ELEVATOR SERVICES / DISPATCH COMMAND DESK</div><h1>The right crew.<br>The next clear move.</h1><p>A decision workspace for the people keeping service moving. Check readiness, understand the exceptions, and carry every next action forward.</p></div>',unsafe_allow_html=True)
+st.markdown('<div class="hero"><div class="eyebrow">DISPATCH COMMAND DESK</div><h1>Elevator Dispatcher</h1><p>The right crew. The next clear move.</p><span class="hero-badge">SYNTHETIC DEMO · NOT LIVE DISPATCH</span><div class="hero-elevator">'+ELEVATOR+'</div></div>',unsafe_allow_html=True)
 st.info('Demo · Synthetic work orders and staff · No live NYCHA connections')
 st.caption('Crew rules are demo-configured. External commitments are unknown; only this local board is checked.')
 st.caption(f'Source generated: {ny_time(tickets[0].created_at)} · Last refresh: {ny_time(st.session_state.refreshed)} · Fetch: local fixture (no network) · {len(tickets)} records · Fallback: not active')
@@ -201,8 +205,8 @@ with crewtab:
         st.caption('Configuration lives in roster.py. Validate operational rules before any real-world use.')
 with plan:
     st.markdown('<div class="section-label">RACHEAL’S WORKSTREAM / REVIEW & CONFIRM</div>',unsafe_allow_html=True)
-    st.subheader('A proposal first. Your decision next.')
-    st.caption('Deshawn’s pinned scheduling engine is connected through a local data adapter. Recommendations are previews, not assignments. Only the local demo board is checked; team merge and shared storage approval remain pending.')
+    st.subheader('Review crew assignment')
+    st.caption('Deshawn’s pinned scheduling engine is connected through a local data adapter. Recommendations are previews, not assignments. This combined preview shares local saved records. Only the demo board is checked; team merge and operational validation remain pending.')
     if st.session_state.get('dispatch_success'):
         st.success(st.session_state.pop('dispatch_success'))
     ticket_ids=[t.ticket_id for t in tickets]
@@ -211,16 +215,17 @@ with plan:
     proposal=next((item for item in proposals if item.ticket_id==chosen),None)
     existing=next((item for item in board if item['ticket_id']==chosen),None)
     st.markdown(f'<div class="ticket-context"><small>WORK ORDER # {escape(demo_work_order(selected_order))} · {escape(selected_order.sector)}</small><strong>{escape(selected_order.building or "Building requires review")}</strong><p>{escape(selected_order.description)}</p></div>',unsafe_allow_html=True)
+    st.markdown(progress_strip(store.progress().get(chosen,{}).get('status','UNASSIGNED')),unsafe_allow_html=True)
     if existing:
         st.info('This work order already has a committed crew: '+', '.join(existing['crew'])+'. Use the manual reassignment section to propose a replacement; no duplicate assignment is created here.')
     elif proposal:
         crew_by_id={person.technician_id:person for person in roster}
-        st.markdown('#### Proposed complete crew')
+        st.markdown('<div class="assignment-window"><span>Proposed complete crew · not yet assigned</span><strong>'+escape(ny_window(proposal.start,proposal.end))+'</strong></div>',unsafe_allow_html=True)
         crew_columns=st.columns(len(proposal.crew))
         for column,tid in zip(crew_columns,proposal.crew):
             person=crew_by_id[tid]
             with column:
-                st.markdown(f'<div class="crew-card"><div class="crew-top"><span class="crew-avatar">{escape(tid)}</span><span class="crew-status">Proposed · not assigned</span></div><h3>{escape(person.alias)}</h3><div class="crew-role">{escape(person.role)}</div><div class="crew-detail">Attendance: {escape(person.attendance)}<br>Authorized boroughs: {escape(", ".join(person.sectors))}<br>Qualification: {escape(person.certification_status)}</div><div class="crew-reason">{ny_window(proposal.start,proposal.end)} · {ny_time(proposal.start).split(" · ")[0]}</div></div>',unsafe_allow_html=True)
+                st.markdown(f'<div class="crew-card proposal-card"><div class="crew-top"><span class="crew-avatar">{escape(tid)}</span><span class="crew-status">Proposed · not assigned</span></div><h3>{escape(person.alias)}</h3><div class="crew-role">{escape(person.role)}</div><div class="crew-detail">Attendance: {escape(person.attendance)}<br>Authorized boroughs: {escape(", ".join(person.sectors))}<br>Qualification: {escape(person.certification_status)}</div><div class="crew-reason">{ny_window(proposal.start,proposal.end)} · {ny_time(proposal.start).split(" · ")[0]}</div></div>',unsafe_allow_html=True)
         st.caption('The plan considers other pending recommendations. Its window or helper can differ from the individual-readiness screen, which checks only the committed board.')
         failures=validate(proposal,selected_order,roster,RULES[selected_order.work_type],board)
         if failures: st.error('Current checks failed: '+', '.join(failures))
@@ -276,6 +281,7 @@ with progress:
     assignment=next((a for a in board if a['ticket_id']==tid),None)
     status_now=current.get('status','UNASSIGNED')
     st.markdown(f'<div class="ticket-context"><small>WORK ORDER # {escape(demo_work_order(t))} · {escape(status_now)}</small><strong>{escape(t.building or "Building needs review")}</strong><p>{escape(t.description)}</p><p>Recorded crew: {escape(", ".join(assignment["crew"]) if assignment else "No committed crew")}</p></div>',unsafe_allow_html=True)
+    st.markdown(progress_strip(status_now),unsafe_allow_html=True)
     overview,update=st.columns([1,2])
     with overview:
         st.markdown('#### Current follow-up')
