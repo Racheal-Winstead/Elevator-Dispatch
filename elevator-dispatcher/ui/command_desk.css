@@ -105,3 +105,12 @@ div[data-testid="stMetric"]{border-top-color:#ae1764;box-shadow:0 4px 14px #2221
 [data-testid="stMain"] [data-testid="stCheckbox"] p,[data-testid="stMain"] label{color:#e3eafa}
 [data-testid="stMain"] [data-testid="stMarkdownContainer"] p{line-height:1.5}
 [data-testid="stMetricValue"],[data-testid="stMetricLabel"]{color:#e7efff!important}
+/* Distinct navigation accents retain white labels and visible selection state. */
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:nth-child(1){border-left:3px solid #39d7e8;background:#22bfd716}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:nth-child(2){border-left:3px solid #ffd052;background:#ffcf4316}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:nth-child(3){border-left:3px solid #ab78ff;background:#a779ff18}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:nth-child(4){border-left:3px solid #ff667f;background:#ff667f18}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:nth-child(5){border-left:3px solid #ffd052;background:#ffcf4316}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:nth-child(6){border-left:3px solid #39d7e8;background:#22bfd716}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:has(input:checked){background:linear-gradient(110deg,#075ab8,#4742a7)!important;box-shadow:0 0 19px #168cff55,inset 0 0 0 1px #84cfff}
+[data-testid="stSidebar"] [data-testid="stRadioGroup"] [data-testid="stRadioOption"]:hover{filter:brightness(1.22)}
