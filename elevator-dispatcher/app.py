@@ -236,7 +236,7 @@ with plan:
         for column,tid in zip(crew_columns,proposal.crew):
             person=crew_by_id[tid]
             with column:
-                st.markdown(f'<div class="compact-crew"><span class="worker-icon">{WORKER}</span><div><h3>{escape(tid)} · {escape(person.alias)}</h3><span class="role-chip">{escape(person.role)}</span><p><span class="ready-dot"></span>Individual checks passed</p></div></div>',unsafe_allow_html=True)
+                st.markdown(f'<div class="compact-crew crew-{escape(person.role.lower())}"><span class="worker-icon">{WORKER}</span><div><h3>{escape(tid)} · {escape(person.alias)}</h3><span class="role-chip">{escape(person.role)}</span><p><span class="ready-dot"></span>Individual checks passed</p></div></div>',unsafe_allow_html=True)
         failures=validate(proposal,selected_order,roster,RULES[selected_order.work_type],board)
         if failures: st.error('Current checks failed: '+', '.join(failures))
         else: st.caption('Complete crew checks passed · Attendance, shift, demo qualifications, borough/depot authorization and booking conflicts checked.')
@@ -273,7 +273,19 @@ with plan:
             st.dataframe(pd.DataFrame([{'ID':crew_by_id[tid].technician_id,'Attendance':crew_by_id[tid].attendance,'Authorized boroughs':', '.join(crew_by_id[tid].sectors),'Demo qualification':crew_by_id[tid].certification_status} for tid in proposal.crew]),hide_index=True,width='stretch')
 
     with st.expander('All pending recommendations'):
-        st.dataframe(pd.DataFrame([{'Work order #':demo_work_order(next(t for t in tickets if t.ticket_id==item.ticket_id)),'Proposed crew':', '.join(item.crew),'Start (New York)':ny_time(item.start),'End (New York)':ny_time(item.end)} for item in proposals]),hide_index=True,width='stretch')
+        st.caption('Each card is a proposed complete crew—not an assignment. Card colors are decorative and do not indicate priority or emergency status.')
+        if proposals:
+            ticket_by_id={ticket.ticket_id:ticket for ticket in tickets}
+            proposal_columns=st.columns(3)
+            for index,item in enumerate(proposals):
+                ticket=ticket_by_id[item.ticket_id]
+                tone=('rose','amber','gold','teal','violet','blue')[index % 6]
+                with proposal_columns[index % 3]:
+                    st.markdown(f'<div class="schedule-card tone-{tone}"><span class="schedule-state">PROPOSED · NOT ASSIGNED</span><strong>{escape(demo_work_order(ticket))} · {escape(ticket.ticket_id)}</strong><span>{escape(ticket.building or "Location needs review")} · {escape(ticket.sector)}</span><span>{escape(ticket.description)}</span><span class="schedule-crew">Crew: {escape(", ".join(item.crew))}</span><small>{escape(ny_window(item.start,item.end))} · {escape(ny_time(item.start).split(" · ")[0])}</small></div>',unsafe_allow_html=True)
+            with st.expander('Show recommendations as a table'):
+                st.dataframe(pd.DataFrame([{'Work order #':demo_work_order(ticket_by_id[item.ticket_id]),'Proposed crew':', '.join(item.crew),'Start (New York)':ny_time(item.start),'End (New York)':ny_time(item.end)} for item in proposals]),hide_index=True,width='stretch')
+        else:
+            st.info('No complete-crew recommendations are currently available. Review scheduling exceptions for the next step.')
     with st.expander('Manual assignment / reassignment — same validator'):
         with st.form('manual'):
             tid=st.selectbox('Work order',[t.ticket_id for t in tickets]); crew=st.multiselect('Crew IDs',[p.technician_id for p in roster])
