@@ -3,8 +3,8 @@ from datetime import timedelta
 from models import Ticket
 from roster import demo_day, BOROUGHS
 
-def load_fixture(count=12):
-    day=demo_day()
+def load_fixture(count=12,day=None):
+    day=day or demo_day()
     tickets=[]
     for i in range(count):
         tickets.append(Ticket(f'ED-{i+1:03}',f'SEED-{i+1:03}',f'Demo Court {i%4+1}',

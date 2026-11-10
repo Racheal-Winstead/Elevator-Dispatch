@@ -1,0 +1,14 @@
+{
+  "messaging.py": {
+    "commit": "6aff6485ae97a8166beaf15678fa3bbf3f0edbb3",
+    "path": "elevator-dispatcher/messaging.py",
+    "blob_sha": "bc46435333832e368daf349f080e2ec55597e72d",
+    "sha256": "e213e0766b78c57d29630bab0dc514ca1a7789f772a9618c1f1050caae718767"
+  },
+  "agents.py": {
+    "commit": "6aff6485ae97a8166beaf15678fa3bbf3f0edbb3",
+    "path": "elevator-dispatcher/agents.py",
+    "blob_sha": "04a13f98cf761feb5ae006adc3e82566bcafbc2c",
+    "sha256": "f63ba76cac85ee84dae5bee643c9fc928cafff796678f7fcd35bfed06803e0ae"
+  }
+}

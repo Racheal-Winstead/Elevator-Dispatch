@@ -1,0 +1,68 @@
+test_complete_shared_ui_flow_and_reload (test_combined_ui.CombinedConsoleTest.test_complete_shared_ui_flow_and_reload) ... 2026-11-10 01:08:20.730 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-10 01:08:22.581 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_arbitrary_existing_overlap_maps_to_slot_even_with_offset (test_deshawn_adapter.AdapterTests.test_arbitrary_existing_overlap_maps_to_slot_even_with_offset) ... ok
+test_depot_missing_qualification_and_expiry_blocked (test_deshawn_adapter.AdapterTests.test_depot_missing_qualification_and_expiry_blocked) ... ok
+test_duplicate_ids_and_unsupported_time_not_silently_coerced (test_deshawn_adapter.AdapterTests.test_duplicate_ids_and_unsupported_time_not_silently_coerced) ... ok
+test_engine_really_called_and_preview_does_not_mutate_inputs (test_deshawn_adapter.AdapterTests.test_engine_really_called_and_preview_does_not_mutate_inputs) ... ok
+test_every_preview_passes_local_rules_and_capacity (test_deshawn_adapter.AdapterTests.test_every_preview_passes_local_rules_and_capacity) ... ok
+test_field_and_role_mapping_preserve_ids_and_no_keyword_emergency (test_deshawn_adapter.AdapterTests.test_field_and_role_mapping_preserve_ids_and_no_keyword_emergency) ... ok
+test_invalid_upstream_output_is_not_saved_or_returned (test_deshawn_adapter.AdapterTests.test_invalid_upstream_output_is_not_saved_or_returned) ... ok
+test_missing_snapshot_returns_visible_reason_without_fallback (test_deshawn_adapter.AdapterTests.test_missing_snapshot_returns_visible_reason_without_fallback) ... ok
+test_overlapping_named_windows_cannot_double_book (test_deshawn_adapter.AdapterTests.test_overlapping_named_windows_cannot_double_book) ... ok
+test_preview_commit_progress_export_restart_and_reset (test_deshawn_adapter.AdapterTests.test_preview_commit_progress_export_restart_and_reset) ... ok
+test_preview_stale_after_roster_change_is_rejected_on_commit (test_deshawn_adapter.AdapterTests.test_preview_stale_after_roster_change_is_rejected_on_commit) ... ok
+test_private_engine_configuration_is_isolated (test_deshawn_adapter.AdapterTests.test_private_engine_configuration_is_isolated) ... ok
+test_unknown_and_absent_attendance_not_offered (test_deshawn_adapter.AdapterTests.test_unknown_and_absent_attendance_not_offered) ... ok
+test_unknown_work_type_and_changed_crew_rule_fail_closed (test_deshawn_adapter.AdapterTests.test_unknown_work_type_and_changed_crew_rule_fail_closed) ... ok
+test_unverified_present_cannot_bypass_upstream_gap (test_deshawn_adapter.AdapterTests.test_unverified_present_cannot_bypass_upstream_gap) ... ok
+test_vendor_matches_upstream_blob_and_checksum_mismatch_blocks (test_deshawn_adapter.AdapterTests.test_vendor_matches_upstream_blob_and_checksum_mismatch_blocks) ... ok
+test_missing_and_naive_time (test_progress_time.ProgressTimeTests.test_missing_and_naive_time) ... ok
+test_missing_owner_rejected (test_progress_time.ProgressTimeTests.test_missing_owner_rejected) ... ok
+test_owner_is_not_recording_actor (test_progress_time.ProgressTimeTests.test_owner_is_not_recording_actor) ... ok
+test_winter_and_summer_offset (test_progress_time.ProgressTimeTests.test_winter_and_summer_offset) ... ok
+test_borough_and_status (test_queue.QueueTests.test_borough_and_status) ... ok
+test_empty_search_does_not_mutate_source (test_queue.QueueTests.test_empty_search_does_not_mutate_source) ... ok
+test_missing_data_remains_visible (test_queue.QueueTests.test_missing_data_remains_visible) ... ok
+test_search_number_and_internal_id (test_queue.QueueTests.test_search_number_and_internal_id) ... ok
+test_unique_demo_numbers (test_queue.QueueTests.test_unique_demo_numbers) ... ok
+test_invalid_existing_timestamp_fails_closed (test_safety_regressions.SafetyRegressions.test_invalid_existing_timestamp_fails_closed) ... ok
+test_mixed_timezone_overlap_rejected_without_state_or_history_change (test_safety_regressions.SafetyRegressions.test_mixed_timezone_overlap_rejected_without_state_or_history_change) ... ok
+test_naive_window_rejected_cleanly (test_safety_regressions.SafetyRegressions.test_naive_window_rejected_cleanly) ... ok
+test_offset_adjacent_window_allowed_and_stored_as_utc (test_safety_regressions.SafetyRegressions.test_offset_adjacent_window_allowed_and_stored_as_utc) ... ok
+test_remove_changes_status_and_bookings_atomically (test_safety_regressions.SafetyRegressions.test_remove_changes_status_and_bookings_atomically) ... ok
+test_unassigned_status_cannot_leave_a_committed_crew (test_safety_regressions.SafetyRegressions.test_unassigned_status_cannot_leave_a_committed_crew) ... ok
+test_advisory_calls_do_not_change_state_or_recommend_split_crews (test_shared_workflow.SharedWorkflowTests.test_advisory_calls_do_not_change_state_or_recommend_split_crews) ... ok
+test_assignment_message_reply_progress_report_share_same_ticket (test_shared_workflow.SharedWorkflowTests.test_assignment_message_reply_progress_report_share_same_ticket) ... ok
+test_blank_sender_and_body_roll_back (test_shared_workflow.SharedWorkflowTests.test_blank_sender_and_body_roll_back) ... ok
+test_cannot_respond_requires_reason_and_blocks_only_on_review (test_shared_workflow.SharedWorkflowTests.test_cannot_respond_requires_reason_and_blocks_only_on_review) ... ok
+test_conflict_needs_urgent_and_explicit_confirmation_without_preemption (test_shared_workflow.SharedWorkflowTests.test_conflict_needs_urgent_and_explicit_confirmation_without_preemption) ... ok
+test_current_clock_crossing_shift_boundary_blocks_send (test_shared_workflow.SharedWorkflowTests.test_current_clock_crossing_shift_boundary_blocks_send) ... ok
+test_duplicate_reply_is_not_overwritten (test_shared_workflow.SharedWorkflowTests.test_duplicate_reply_is_not_overwritten) ... ok
+test_no_ack_threshold_persisted_and_clears_from_current_followup (test_shared_workflow.SharedWorkflowTests.test_no_ack_threshold_persisted_and_clears_from_current_followup) ... ok
+test_reply_without_apply_keeps_work_status (test_shared_workflow.SharedWorkflowTests.test_reply_without_apply_keeps_work_status) ... ok
+test_restart_and_reset_preserve_messages_activity_and_seed (test_shared_workflow.SharedWorkflowTests.test_restart_and_reset_preserve_messages_activity_and_seed) ... ok
+test_send_uses_persisted_attendance_not_stale_caller (test_shared_workflow.SharedWorkflowTests.test_send_uses_persisted_attendance_not_stale_caller) ... ok
+test_stale_crew_reply_rejected_atomically (test_shared_workflow.SharedWorkflowTests.test_stale_crew_reply_rejected_atomically) ... ok
+test_unknown_absent_and_inactive_recipients_blocked_even_if_urgent (test_shared_workflow.SharedWorkflowTests.test_unknown_absent_and_inactive_recipients_blocked_even_if_urgent) ... ok
+test_review_commit_manual_rejection_and_remove (test_ui.ConsoleTests.test_review_commit_manual_rejection_and_remove) ... 2026-11-10 01:08:23.496 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_adjacent_slots_allowed (test_workbench.WorkbenchTests.test_adjacent_slots_allowed) ... ok
+test_area_and_depot (test_workbench.WorkbenchTests.test_area_and_depot) ... ok
+test_demo_borough_coverage (test_workbench.WorkbenchTests.test_demo_borough_coverage) ... ok
+test_determinism_and_float (test_workbench.WorkbenchTests.test_determinism_and_float) ... ok
+test_failed_actor_rolls_back (test_workbench.WorkbenchTests.test_failed_actor_rolls_back) ... ok
+test_hazard_invalid_and_non_demo_blocked (test_workbench.WorkbenchTests.test_hazard_invalid_and_non_demo_blocked) ... ok
+test_overlap_atomic_rollback (test_workbench.WorkbenchTests.test_overlap_atomic_rollback) ... ok
+test_partial_duplicate_and_unknown_crew (test_workbench.WorkbenchTests.test_partial_duplicate_and_unknown_crew) ... ok
+test_persistence (test_workbench.WorkbenchTests.test_persistence) ... ok
+test_qualification_expiry_and_verification (test_workbench.WorkbenchTests.test_qualification_expiry_and_verification) ... ok
+test_reassignment_failure_preserves_old (test_workbench.WorkbenchTests.test_reassignment_failure_preserves_old) ... ok
+test_remove_and_reset_audit (test_workbench.WorkbenchTests.test_remove_and_reset_audit) ... ok
+test_status_reports_and_csv (test_workbench.WorkbenchTests.test_status_reports_and_csv) ... ok
+test_unknown_absent_inactive_offshift (test_workbench.WorkbenchTests.test_unknown_absent_inactive_offshift) ... ok
+
+----------------------------------------------------------------------
+Ran 60 tests in 4.394s
+
+OK

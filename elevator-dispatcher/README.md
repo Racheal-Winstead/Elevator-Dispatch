@@ -1,3 +1,7 @@
+# Combined branch
+
+The current candidate is `codex/combined-demo`; see [COMBINED_BUILD.md](docs/COMBINED_BUILD.md). It adds shared simulated messaging and advice to the existing console. The setup notes below describe the earlier personal implementation. Current validation: **60 tests pass**. Use port 8504 to keep the earlier previews separate.
+
 # Elevator Dispatcher — Racheal’s demonstration
 
 A separate local project for Racheal Winstead’s roster, dispatcher console and QA assignment. Vendor Performance Manager is outside this project and was not modified by this work.

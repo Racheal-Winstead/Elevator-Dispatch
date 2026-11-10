@@ -16,6 +16,7 @@ from demo_adapter.fixtures import load_fixture
 from integrations.deshawn_adapter import recommend, ENGINE_COMMIT
 from time_windows import booked
 from state.audit import Store, now, report, csv_export
+from ui.communication import render as render_communication, handover_draft
 
 st.set_page_config(page_title='Elevator Dispatcher | Workbench',page_icon='↕',layout='wide')
 st.markdown("""<style>
@@ -51,13 +52,17 @@ div[data-testid="stMetric"]{background:white;border:1px solid #e6e7ed;border-rad
 </style>""",unsafe_allow_html=True)
 ROOT=Path(__file__).parent
 st.session_state.store=Store(os.environ.get('WORKBENCH_DB',str(ROOT/'workbench.sqlite3')))
+seed_day=datetime.fromisoformat(st.session_state.store.seed_day())
+demo_windows=slots(seed_day)
 if 'tickets' not in st.session_state or st.session_state.get('roster_version') != RULE_VERSION:
     st.session_state.roster_version=RULE_VERSION
-    st.session_state.tickets=load_fixture()
-    st.session_state.roster=demo_roster()
+    st.session_state.tickets=load_fixture(day=seed_day)
+    st.session_state.roster=demo_roster(seed_day)
     st.session_state.refreshed=now()
     st.session_state.store.event('IMPORT','seed','Demo dispatcher',None,{'count':12,'mode':'DEMO_SEED'},'Synthetic fixture loaded')
-store=st.session_state.store; tickets=st.session_state.tickets; roster=st.session_state.roster
+store=st.session_state.store; tickets=st.session_state.tickets
+overrides=store.setting('attendance',{})
+roster=[replace(p,attendance=overrides.get(p.technician_id,p.attendance)) for p in st.session_state.roster]
 with st.sidebar:
     st.title('↕ Dispatch\nCommand Desk')
     st.caption('Racheal Winstead • Product Operations & QA')
@@ -72,14 +77,15 @@ with st.sidebar:
         st.session_state.refreshed=now()
         store.event('REFRESH','seed',actor,None,{'count':len(tickets)},'Re-read unchanged synthetic source; local state retained')
         st.rerun()
-    st.caption('Monday milestone: date and time awaiting team confirmation.')
+    st.caption('Combined candidate · One local database for assignments, messages, replies, progress and history.')
 
 st.markdown('<div class="hero"><span class="hero-badge">SYNTHETIC DEMONSTRATION · NOT LIVE DISPATCH</span><div class="eyebrow">ELEVATOR SERVICES / DISPATCH COMMAND DESK</div><h1>The right crew.<br>The next clear move.</h1><p>A decision workspace for the people keeping service moving. Check readiness, understand the exceptions, and carry every next action forward.</p></div>',unsafe_allow_html=True)
-st.info('DEMO SEED · Qualification and crew rules are demo-configured. External commitments are unknown; only this local board is checked.')
+st.info('Demo · Synthetic work orders and staff · No live NYCHA connections')
+st.caption('Crew rules are demo-configured. External commitments are unknown; only this local board is checked.')
 st.caption(f'Source generated: {ny_time(tickets[0].created_at)} · Last refresh: {ny_time(st.session_state.refreshed)} · Fetch: local fixture (no network) · {len(tickets)} records · Fallback: not active')
 board=store.assignments(); assigned={a['ticket_id'] for a in board}; invalid=[t for t in tickets if 'INVALID_TICKET_DATA' in ticket_errors(t)]
 valid=[t for t in tickets if not ticket_errors(t)]
-start=perf_counter(); proposals,exceptions=recommend(tickets,roster,RULES,slots(),board); compute=perf_counter()-start
+start=perf_counter(); proposals,exceptions=recommend(tickets,roster,RULES,demo_windows,board); compute=perf_counter()-start
 c1,c2,c3,c4=st.columns(4)
 c1.metric('Received',len(tickets)); c2.metric('Committed crews',len(board)); c3.metric('Needs attention',len(exceptions)); c4.metric('Adapter compute',f'{compute*1000:.1f} ms')
 st.caption(f'Reconciliation: {len(board)} assigned + {len(tickets)-len(board)-len(invalid)} unassigned non-invalid + {len(invalid)} invalid = {len(tickets)} received. Preview: {len(proposals)} recommendations; these are not committed assignments.')
@@ -95,7 +101,7 @@ def open_progress(ticket_id):
 def open_dispatch_plan(ticket_id):
     st.session_state.plan_ticket=ticket_id
     st.session_state.workbench_view='03  Dispatch plan'
-crewtab,queue,plan,progress,export=st.tabs(['01  Crew readiness','02  Work queue','03  Dispatch plan','04  Progress & exceptions','05  Shift handover'],key='workbench_view',on_change='rerun')
+crewtab,queue,plan,progress,export,communication=st.tabs(['01  Crew readiness','02  Work queue','03  Dispatch plan','04  Progress & exceptions','05  Shift handover','06  Messages & advice'],key='workbench_view',on_change='rerun')
 with queue:
     st.markdown('<div class="section-label">RACHEAL’S WORKSTREAM / WORK-ORDER REVIEW</div>',unsafe_allow_html=True)
     st.subheader('Find the work. Understand the next step.')
@@ -143,7 +149,7 @@ with crewtab:
     st.caption('Choose a work order and time window. Readiness is checked against demo rules and this local board—not live staffing systems.')
     left,right=st.columns([2,1])
     selected=left.selectbox('Check crew for work order',[t.ticket_id for t in tickets],format_func=lambda tid:next(f'{demo_work_order(t)} · {t.building or "Location missing"}' for t in tickets if t.ticket_id==tid),key='readiness_ticket')
-    windows=slots()
+    windows=demo_windows
     window=right.selectbox('Assignment window (New York time)',range(len(windows)),format_func=lambda i:ny_window(*windows[i]),key='readiness_window')
     selected_ticket=next(t for t in tickets if t.ticket_id==selected)
     start_time,end_time=windows[window]
@@ -180,7 +186,7 @@ with crewtab:
             if any(tech in a['crew'] for a in board): st.error('Remove or reassign existing commitments before changing attendance.')
             else:
                 old=next(p for p in roster if p.technician_id==tech)
-                store.event('ATTENDANCE',tech,actor,old.attendance,attendance,'Dispatcher demo roster update')
+                store.attendance(old,attendance,actor)
                 st.session_state.roster=[replace(p,attendance=attendance) if p.technician_id==tech else p for p in roster]; st.rerun()
     st.markdown('#### Crew rules')
     st.caption('Illustrative rules for this demonstration—not verified NYCHA staffing policy.')
@@ -244,7 +250,7 @@ with plan:
     with st.expander('Manual assignment / reassignment — same validator'):
         with st.form('manual'):
             tid=st.selectbox('Work order',[t.ticket_id for t in tickets]); crew=st.multiselect('Crew IDs',[p.technician_id for p in roster])
-            windows=slots(); slot=st.selectbox('Time window (New York time)',range(len(windows)),format_func=lambda i:ny_window(*windows[i]))
+            windows=demo_windows; slot=st.selectbox('Time window (New York time)',range(len(windows)),format_func=lambda i:ny_window(*windows[i]))
             reason=st.text_input('Decision reason'); replace_existing=st.checkbox('Replace this ticket’s existing complete crew')
             st.caption('Preview above: selected crew and time replace only this ticket when checked. No other ticket is displaced. Full validation runs on commit.')
             if st.form_submit_button('Validate and commit manual proposal'):
@@ -300,12 +306,18 @@ with progress:
                     except ValueError as error: st.error('Update not saved: '+str(error))
     st.markdown('#### Work-order activity')
     events=[e for e in store.history() if e['entity_id']==tid]
+    messages=store.messages(tid)
+    if messages:
+        st.markdown('#### Messages linked to this work order')
+        st.dataframe(pd.DataFrame([{'Message':m['message_id'],'Recipient':m['recipient'],'Reply':m['response'] or 'Awaiting reply','Reason':m.get('response_reason','')} for m in messages]),hide_index=True,width='stretch')
     if events:
         st.dataframe(pd.DataFrame([{'New York time':ny_time(e['timestamp']),'Event':e['event_type'],'Recorded by':e['actor'],'Reason':e['reason']} for e in events]),hide_index=True,width='stretch')
     else: st.info('No recorded activity for this work order yet. Its initial state comes from the synthetic dataset.')
     with st.expander('All scheduling exceptions'):
         st.dataframe(pd.DataFrame([{'Work order #':demo_work_order(next(t for t in tickets if t.ticket_id==ident)),'Reason codes':', '.join(codes)} for ident,codes in exceptions.items()]),hide_index=True,width='stretch')
     st.caption('Unassigned critical work and hazard-review flags require human action under the applicable approved procedure. This screen does not send an external escalation or enforce an unvalidated 90-minute timer.')
+with communication:
+    render_communication(store,tickets,roster,RULES,demo_windows,actor,proposals,exceptions)
 with export:
     st.subheader('Leave the next shift a usable record')
     rows=report(tickets,store)
@@ -314,6 +326,10 @@ with export:
     for label,subset in [('Daily assignment',[r for r in rows if r['crew']]),('Open work',open_rows),('Unassigned exceptions',[r for r in rows if not r['crew']]),('Shift handover',open_rows)]:
         st.download_button(f'Download {label.lower()} CSV',csv_export(subset),file_name=label.lower().replace(' ','_')+'.csv',mime='text/csv')
     st.caption('Reporting window: current synthetic fixture and local board. “Dispatcher review” is an explicit queue owner awaiting named acknowledgement; it is not a confirmed external assignee. Notifications and accessibility handoffs are not connected or assumed complete.')
+    with st.expander('Shared handover advice — current open work and activity'):
+        draft=handover_draft(store,tickets)
+        st.text_area('Review handover draft',draft,height=260,key='shared_handover_draft')
+        st.download_button('Download shared handover draft',draft,file_name='shared_handover_draft.txt')
     st.markdown('**Metric definitions**')
     st.write(f'Data completeness: {len(tickets)-len(invalid)} / {len(tickets)} received. Initial preview yield is calculated before any commits; capacity and review exclusions affect its denominator. Current unassigned reason coverage: {len(exceptions)} / {len(tickets)-len(board)-len(proposals)} records without a recommendation. This is a fixture measure, not agency service performance.')
     st.markdown('**Append-only application activity**')

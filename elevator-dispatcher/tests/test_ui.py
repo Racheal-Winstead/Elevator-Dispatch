@@ -12,7 +12,7 @@ class ConsoleTests(unittest.TestCase):
             try:
                 app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
                 self.assertFalse(app.exception)
-                self.assertEqual(len(app.tabs),5)
+                self.assertEqual(len(app.tabs),6)
                 # Default ticket has a complete synthetic recommendation.
                 confirm=next(b for b in app.button if b.label=='Confirm complete crew assignment')
                 confirm.click().run()

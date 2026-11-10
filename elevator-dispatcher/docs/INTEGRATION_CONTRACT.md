@@ -1,3 +1,5 @@
+> Combined branch addendum: messaging and advisory functions now use the shared local Store through `feature_bridge.py`. See [COMBINED_BUILD.md](COMBINED_BUILD.md). Statements below excluding messaging describe the earlier engine-only integration. Team adoption and merging remain separate decisions.
+
 # Local data adapter contract — November 8, 2026
 
 Racheal’s console now uses an unmodified local snapshot of Deshawn’s engine at commit `6aff6485ae97a8166beaf15678fa3bbf3f0edbb3` from [Racheal-Winstead/Elevator-Dispatch](https://github.com/Racheal-Winstead/Elevator-Dispatch). This is a tested local compatibility layer. Deshawn’s repository, app, messaging and audit implementation were not modified. Shared SQLite adoption and the team merge are still pending agreement.

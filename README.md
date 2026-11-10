@@ -2,7 +2,11 @@
 
 Elevator dispatcher-assistance demo — Racheal Winstead and Deshawn Jeter.
 
-## Racheal’s reviewed local implementation
+## Combined console candidate
+
+This branch is `codex/combined-demo`. It keeps Racheal’s console design and connects Deshawn’s pinned scheduling, simulated messaging and advisory functions to one local SQLite history. Assignments, attendance, messages, replies, progress and handover use the same saved records. See [combined build details](elevator-dispatcher/docs/COMBINED_BUILD.md) for behavior, attribution, validation and limitations. Run on port **8504** for a separate preview. **60 tests pass**. No merge into `main` or `developer` is part of this branch.
+
+## Earlier reviewed personal implementation (historical)
 
 This checkout is on `codex/racheal`, tracking `origin/codex/racheal` in
 [Racheal-Winstead/Elevator-Dispatch](https://github.com/Racheal-Winstead/Elevator-Dispatch).
