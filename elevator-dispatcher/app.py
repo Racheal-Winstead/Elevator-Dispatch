@@ -17,9 +17,9 @@ from integrations.deshawn_adapter import recommend, ENGINE_COMMIT
 from time_windows import booked
 from state.audit import Store, now, report, csv_export
 from ui.communication import render as render_communication, handover_draft
-from ui.presentation import ELEVATOR, progress_strip
+from ui.presentation import ELEVATOR, WORKER, progress_strip
 
-st.set_page_config(page_title='Elevator Dispatcher | Workbench',page_icon='↕',layout='wide')
+st.set_page_config(page_title='Elevator Dispatcher | Workbench',page_icon='↕',layout='wide',initial_sidebar_state='expanded')
 st.markdown("""<style>
 :root {--navy:#142238;--pink:#a52b68;--line:#e6e7ed}
 .stApp{background:#f7f7fa;color:#19283d} .block-container{max-width:1500px;padding-top:2rem;padding-bottom:3rem}
@@ -65,11 +65,18 @@ if 'tickets' not in st.session_state or st.session_state.get('roster_version') !
 store=st.session_state.store; tickets=st.session_state.tickets
 overrides=store.setting('attendance',{})
 roster=[replace(p,attendance=overrides.get(p.technician_id,p.attendance)) for p in st.session_state.roster]
+VIEWS=['01  Crew readiness','02  Work queue','03  Dispatch plan','04  Progress & exceptions','05  Shift handover','06  Messages & advice']
+if 'workbench_view' not in st.session_state: st.session_state.workbench_view=VIEWS[2]
+if 'desk_nav' not in st.session_state: st.session_state.desk_nav=st.session_state.workbench_view
+def navigate_desk():
+    st.session_state.workbench_view=st.session_state.desk_nav
 with st.sidebar:
     st.markdown('<div class="desk-logo">'+ELEVATOR+'</div>',unsafe_allow_html=True)
-    st.title('Elevator Dispatcher')
+    st.markdown('<div class="sidebar-brand">Elevator<br>Dispatcher</div>',unsafe_allow_html=True)
     st.caption('Dispatch Command Desk')
-    st.caption('Racheal Winstead • Product Operations & QA')
+    st.radio('Workspace',VIEWS,key='desk_nav',format_func=lambda value:dict(zip(VIEWS,['♙  Crew readiness','▤  Work queue','▣  Dispatch plan','▥  Progress & exceptions','⇄  Shift handover','✉  Messages & advice']))[value],on_change=navigate_desk,label_visibility='collapsed')
+    st.markdown('<div class="sidebar-scene">'+ELEVATOR+'</div>',unsafe_allow_html=True)
+    st.caption('Racheal Winstead & Deshawn Jeter')
     actor=st.text_input('Dispatcher name / demo alias','Demo dispatcher')
     st.divider()
     st.markdown('**SOURCE MODE**\n\nDEMO SEED')
@@ -83,29 +90,33 @@ with st.sidebar:
         st.rerun()
     st.caption('Combined candidate · One local database for assignments, messages, replies, progress and history.')
 
-st.markdown('<div class="hero"><div class="eyebrow">DISPATCH COMMAND DESK</div><h1>Elevator Dispatcher</h1><p>The right crew. The next clear move.</p><span class="hero-badge">SYNTHETIC DEMO · NOT LIVE DISPATCH</span><div class="hero-elevator">'+ELEVATOR+'</div></div>',unsafe_allow_html=True)
-st.info('Demo · Synthetic work orders and staff · No live NYCHA connections')
-st.caption('Crew rules are demo-configured. External commitments are unknown; only this local board is checked.')
-st.caption(f'Source generated: {ny_time(tickets[0].created_at)} · Last refresh: {ny_time(st.session_state.refreshed)} · Fetch: local fixture (no network) · {len(tickets)} records · Fallback: not active')
+st.markdown('<header class="product-header"><div><h1>Elevator Dispatcher</h1><p>Dispatch Command Desk</p></div><span class="product-badge">SYNTHETIC DEMO</span><div class="header-art">'+ELEVATOR+'</div></header>',unsafe_allow_html=True)
+
 board=store.assignments(); assigned={a['ticket_id'] for a in board}; invalid=[t for t in tickets if 'INVALID_TICKET_DATA' in ticket_errors(t)]
 valid=[t for t in tickets if not ticket_errors(t)]
 start=perf_counter(); proposals,exceptions=recommend(tickets,roster,RULES,demo_windows,board); compute=perf_counter()-start
-c1,c2,c3,c4=st.columns(4)
-c1.metric('Received',len(tickets)); c2.metric('Committed crews',len(board)); c3.metric('Needs attention',len(exceptions)); c4.metric('Adapter compute',f'{compute*1000:.1f} ms')
-st.caption(f'Reconciliation: {len(board)} assigned + {len(tickets)-len(board)-len(invalid)} unassigned non-invalid + {len(invalid)} invalid = {len(tickets)} received. Preview: {len(proposals)} recommendations; these are not committed assignments.')
-urgent=[t for t in tickets if (t.critical or t.hazard_review) and t.ticket_id not in assigned]
-if urgent:
-    st.warning('HUMAN REVIEW · '+', '.join(t.ticket_id for t in urgent)+' — review reported hazard / critical impact and follow the applicable approved procedure. No automatic emergency declaration or preemption.')
+with st.expander('Board overview & demo information',expanded=False):
+    st.caption('Synthetic work orders and staff · No live NYCHA connections. Demo rules require operational validation; external commitments are unknown.')
+    st.caption(f'Source generated: {ny_time(tickets[0].created_at)} · Refreshed: {ny_time(st.session_state.refreshed)} · {len(tickets)} synthetic records · No network source')
+    c1,c2,c3,c4=st.columns(4)
+    c1.metric('Received',len(tickets)); c2.metric('Committed crews',len(board)); c3.metric('Needs attention',len(exceptions)); c4.metric('Adapter compute',f'{compute*1000:.1f} ms')
+    st.caption(f'Reconciliation: {len(board)} assigned + {len(tickets)-len(board)-len(invalid)} unassigned non-invalid + {len(invalid)} invalid = {len(tickets)} received. Preview: {len(proposals)} recommendations; these are not committed assignments.')
+    urgent=[t for t in tickets if (t.critical or t.hazard_review) and t.ticket_id not in assigned]
+    if urgent:
+        st.warning('HUMAN REVIEW · '+', '.join(t.ticket_id for t in urgent)+' — review reported hazard / critical impact and follow the applicable approved procedure. No automatic emergency declaration or preemption.')
 def open_readiness(ticket_id):
     st.session_state.readiness_ticket=ticket_id
     st.session_state.workbench_view='01  Crew readiness'
+    st.session_state.desk_nav='01  Crew readiness'
 def open_progress(ticket_id):
     st.session_state.progress_ticket=ticket_id
     st.session_state.workbench_view='04  Progress & exceptions'
+    st.session_state.desk_nav='04  Progress & exceptions'
 def open_dispatch_plan(ticket_id):
     st.session_state.plan_ticket=ticket_id
     st.session_state.workbench_view='03  Dispatch plan'
-crewtab,queue,plan,progress,export,communication=st.tabs(['01  Crew readiness','02  Work queue','03  Dispatch plan','04  Progress & exceptions','05  Shift handover','06  Messages & advice'],key='workbench_view',on_change='rerun')
+    st.session_state.desk_nav='03  Dispatch plan'
+crewtab,queue,plan,progress,export,communication=st.tabs(VIEWS,key='workbench_view',on_change='rerun')
 with queue:
     st.markdown('<div class="section-label">RACHEAL’S WORKSTREAM / WORK-ORDER REVIEW</div>',unsafe_allow_html=True)
     st.subheader('Find the work. Understand the next step.')
@@ -204,9 +215,8 @@ with crewtab:
         st.json({k:{'required_roles':v.roles,'required_qualifications':v.qualifications,'rule_source':v.source} for k,v in RULES.items()})
         st.caption('Configuration lives in roster.py. Validate operational rules before any real-world use.')
 with plan:
-    st.markdown('<div class="section-label">RACHEAL’S WORKSTREAM / REVIEW & CONFIRM</div>',unsafe_allow_html=True)
     st.subheader('Review crew assignment')
-    st.caption('Deshawn’s pinned scheduling engine is connected through a local data adapter. Recommendations are previews, not assignments. This combined preview shares local saved records. Only the demo board is checked; team merge and operational validation remain pending.')
+    st.caption('Review the proposed crew and window, then confirm. Nothing is assigned automatically.')
     if st.session_state.get('dispatch_success'):
         st.success(st.session_state.pop('dispatch_success'))
     ticket_ids=[t.ticket_id for t in tickets]
@@ -214,28 +224,28 @@ with plan:
     selected_order=next(t for t in tickets if t.ticket_id==chosen)
     proposal=next((item for item in proposals if item.ticket_id==chosen),None)
     existing=next((item for item in board if item['ticket_id']==chosen),None)
-    st.markdown(f'<div class="ticket-context"><small>WORK ORDER # {escape(demo_work_order(selected_order))} · {escape(selected_order.sector)}</small><strong>{escape(selected_order.building or "Building requires review")}</strong><p>{escape(selected_order.description)}</p></div>',unsafe_allow_html=True)
-    st.markdown(progress_strip(store.progress().get(chosen,{}).get('status','UNASSIGNED')),unsafe_allow_html=True)
+    window_label=ny_window(proposal.start,proposal.end) if proposal else ny_window(pd.Timestamp(existing['start']),pd.Timestamp(existing['end'])) if existing else 'Review required'
+    badge='Crew assigned' if existing else 'Proposed · not yet assigned' if proposal else 'Assignment on hold'
+    st.markdown(f'<div class="job-banner"><span class="job-icon">▥</span><div class="job-description"><h3>{escape(selected_order.ticket_id)} · {escape(selected_order.building or "Location needs review")}</h3><p>{escape(selected_order.sector)} · {escape(selected_order.description)}</p><small>Demo work order # {escape(demo_work_order(selected_order))}</small></div><div class="job-window"><small>Proposed window</small><strong>{escape(window_label)}</strong></div><span class="job-badge">{badge}</span></div>',unsafe_allow_html=True)
     if existing:
         st.info('This work order already has a committed crew: '+', '.join(existing['crew'])+'. Use the manual reassignment section to propose a replacement; no duplicate assignment is created here.')
     elif proposal:
         crew_by_id={person.technician_id:person for person in roster}
-        st.markdown('<div class="assignment-window"><span>Proposed complete crew · not yet assigned</span><strong>'+escape(ny_window(proposal.start,proposal.end))+'</strong></div>',unsafe_allow_html=True)
+        st.markdown('#### Crew')
         crew_columns=st.columns(len(proposal.crew))
         for column,tid in zip(crew_columns,proposal.crew):
             person=crew_by_id[tid]
             with column:
-                st.markdown(f'<div class="crew-card proposal-card"><div class="crew-top"><span class="crew-avatar">{escape(tid)}</span><span class="crew-status">Proposed · not assigned</span></div><h3>{escape(person.alias)}</h3><div class="crew-role">{escape(person.role)}</div><div class="crew-detail">Attendance: {escape(person.attendance)}<br>Authorized boroughs: {escape(", ".join(person.sectors))}<br>Qualification: {escape(person.certification_status)}</div><div class="crew-reason">{ny_window(proposal.start,proposal.end)} · {ny_time(proposal.start).split(" · ")[0]}</div></div>',unsafe_allow_html=True)
-        st.caption('The plan considers other pending recommendations. Its window or helper can differ from the individual-readiness screen, which checks only the committed board.')
+                st.markdown(f'<div class="compact-crew"><span class="worker-icon">{WORKER}</span><div><h3>{escape(tid)} · {escape(person.alias)}</h3><span class="role-chip">{escape(person.role)}</span><p><span class="ready-dot"></span>Individual checks passed</p></div></div>',unsafe_allow_html=True)
         failures=validate(proposal,selected_order,roster,RULES[selected_order.work_type],board)
         if failures: st.error('Current checks failed: '+', '.join(failures))
-        else: st.success('Complete-crew checks pass against the current demo board: roles, attendance, shift, configured qualifications, borough/depot authorization, and overlapping commitments.')
-        st.write('**Why this proposal:** '+proposal.explanation)
-        st.write('**What confirmation changes:** saves every required crew member together, marks the work ASSIGNED, and records the dispatcher, time and decision reason. Other assignments stay in place. No field notification or Maximo update is sent.')
+        else: st.caption('Complete crew checks passed · Attendance, shift, demo qualifications, borough/depot authorization and booking conflicts checked.')
         with st.form('confirm_dispatch_'+chosen):
             decision_reason=st.text_input('Assignment decision reason',value='Reviewed complete demo crew and time window',key='dispatch_reason_'+chosen)
-            acknowledged=st.checkbox('I reviewed this complete crew and time window',key='dispatch_ack_'+chosen)
-            commit_clicked=st.form_submit_button('Confirm complete crew assignment',type='primary',disabled=bool(failures))
+            review_column,confirm_column=st.columns([3,2],vertical_alignment='center')
+            acknowledged=review_column.checkbox('I reviewed this complete crew and time window',key='dispatch_ack_'+chosen)
+            with confirm_column:
+                commit_clicked=st.form_submit_button('Confirm complete crew assignment',type='primary',disabled=bool(failures),width='stretch')
             if commit_clicked:
                 if not acknowledged: st.error('Review the proposal and check the confirmation box first. No assignment was saved.')
                 elif not decision_reason.strip(): st.error('Enter a decision reason. No assignment was saved.')
@@ -249,7 +259,19 @@ with plan:
         reasons=exceptions.get(chosen,['NO_CAPACITY'])
         st.warning('No complete crew recommendation for this work order: '+', '.join(reasons))
         st.write('**Next step:** review the work-order details or recorded availability. Use Progress & exceptions to record the responsible person and follow-up. Do not force a partial crew or override an unresolved hold.')
-    st.button('Track this work order’s progress →',on_click=open_progress,args=(chosen,),key='plan_to_progress')
+    progress_column,next_column=st.columns([3,2])
+    with progress_column:
+        st.markdown(progress_strip(store.progress().get(chosen,{}).get('status','UNASSIGNED')),unsafe_allow_html=True)
+    with next_column:
+        next_action='Crew saved. Track updates or review a simulated message.' if existing else 'Review the proposed crew, then confirm.' if proposal else 'Review the hold and record the responsible owner and next action.'
+        st.markdown('<div class="next-panel"><h4>◎ Next action</h4><p>'+next_action+'</p><small>No field notification or Maximo update is sent.</small></div>',unsafe_allow_html=True)
+        st.button('Track this work order’s progress →',on_click=open_progress,args=(chosen,),key='plan_to_progress')
+    with st.expander('Why this crew? · Assignment details'):
+        st.write(proposal.explanation if proposal else 'No new complete-crew proposal is available for this record.')
+        st.caption('The plan considers pending recommendations as well as the committed board. Its window or helper may differ from individual readiness. Confirmation validates the current saved board again and saves the entire crew together. Other jobs remain unchanged.')
+        if proposal:
+            st.dataframe(pd.DataFrame([{'ID':crew_by_id[tid].technician_id,'Attendance':crew_by_id[tid].attendance,'Authorized boroughs':', '.join(crew_by_id[tid].sectors),'Demo qualification':crew_by_id[tid].certification_status} for tid in proposal.crew]),hide_index=True,width='stretch')
+
     with st.expander('All pending recommendations'):
         st.dataframe(pd.DataFrame([{'Work order #':demo_work_order(next(t for t in tickets if t.ticket_id==item.ticket_id)),'Proposed crew':', '.join(item.crew),'Start (New York)':ny_time(item.start),'End (New York)':ny_time(item.end)} for item in proposals]),hide_index=True,width='stretch')
     with st.expander('Manual assignment / reassignment — same validator'):

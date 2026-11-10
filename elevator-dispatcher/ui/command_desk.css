@@ -22,3 +22,46 @@ div[data-testid="stMetric"]{border-top-color:#ae1764;box-shadow:0 4px 14px #2221
 .progress-strip{display:flex;list-style:none;padding:0;margin:0;gap:0}.progress-strip li{flex:1;position:relative;display:flex;align-items:center;flex-direction:column;gap:8px;font-size:12px;text-align:center;color:#657089}.progress-strip li:before{content:'';position:absolute;top:10px;left:-50%;width:100%;height:2px;background:#d9d4df}.progress-strip li:first-child:before{content:none}.step-dot{position:relative;z-index:1;width:22px;height:22px;border:3px solid #b9b1c6;border-radius:50%;background:#fff;box-sizing:border-box}.progress-strip .current{color:#941257;font-weight:800}.current .step-dot{border:6px solid #ae1764}
 @media(max-width:700px){.hero h1{font-size:30px}.hero p{font-size:17px;max-width:80%}.hero-elevator{right:10px;width:65px}.progress-strip{flex-wrap:wrap;gap:15px}.progress-strip li{flex:1 0 26%}.progress-strip li:before{content:none}.proposal-card{min-height:0}}
 @media(max-width:850px){div[data-testid="stMetric"]{padding:12px} [data-testid="stMetricValue"]{font-size:clamp(18px,3.5vw,30px)}}
+/* Product layout: real sidebar navigation and compact command desk. */
+.block-container{max-width:1500px;padding-top:1.2rem;padding-bottom:2rem}
+[data-testid="stSidebar"]{min-width:245px;max-width:270px}
+[data-testid="stSidebar"] [data-testid="stSidebarContent"]{padding-top:1rem}
+[data-testid="stSidebar"] .desk-logo{width:58px;margin:0 auto 10px}
+.sidebar-brand{font-size:22px;line-height:1.15;font-weight:800;color:#fff;text-align:center}
+[data-testid="stSidebar"] [data-testid="stRadio"]{margin-top:15px}
+[data-testid="stSidebar"] [data-testid="stRadio"] label{border-radius:9px;padding:10px 8px;margin:2px 0;width:100%;font-size:16px;cursor:pointer}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked){background:#b31565;box-shadow:0 4px 16px #100a1933}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label p{color:#fff!important}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:focus-within{outline:2px solid #f1b9d5;outline-offset:2px}
+.sidebar-scene{height:110px;position:relative;margin:10px 0;color:#d68aaf;background:linear-gradient(90deg,transparent 29%,#ae789633 30%,transparent 31%,transparent 69%,#ae789633 70%,transparent 71%);border-bottom:1px solid #c781a344}
+.sidebar-scene svg{height:105px;display:block;margin:auto;opacity:.7}
+.product-header{display:flex;align-items:center;gap:20px;border-left:5px solid #ae1764;padding:2px 20px 14px;position:relative;border-bottom:1px solid #e1c4d5;margin-bottom:16px;overflow:hidden;min-height:90px}
+.product-header h1{font-size:38px;margin:0;padding:0;color:#171e3b;line-height:1.12;font-weight:850;position:relative;z-index:1}
+.product-header p{font-size:23px;line-height:1.4;color:#414767;margin:4px 0 0}
+.product-badge{font-size:10px;font-weight:800;letter-spacing:.08em;background:#ae1764;color:white;padding:7px 12px;border-radius:6px;margin-left:auto;white-space:nowrap;z-index:1}
+.header-art{position:absolute;right:15px;width:85px;top:-18px;opacity:.08;color:#7c2158}
+/* Retain the existing stateful view containers while sidebar becomes the sole nav. */
+[data-testid="stTabs"]>[data-baseweb="tab-list"]{display:none}
+[data-testid="stTabs"] [data-testid="stTabContent"]{padding-top:4px}
+[data-testid="stTabs"] h3{font-size:27px}
+.job-banner{display:flex;align-items:center;gap:16px;background:white;border:1px solid #e2d9e5;border-radius:14px;padding:18px 20px;margin:5px 0 16px;box-shadow:0 4px 16px #432b3804}
+.job-icon{color:#ae1764;font-size:34px;border-right:2px solid #e8e1ed;padding-right:14px}.job-description{flex:1;min-width:0}.job-description h3{font-size:21px!important;margin:0;padding:0;line-height:1.2;color:#171e3b}.job-description p{font-size:13px;margin:5px 0;color:#3e4b61}.job-description small{font-size:10px;color:#747589}
+.job-window{background:#f4f0f6;border-radius:9px;padding:10px 14px;display:flex;flex-direction:column;gap:3px;max-width:240px}.job-window small{font-size:11px}.job-window strong{font-size:15px;color:#171e3b}
+.job-badge{font-size:11px;font-weight:800;color:#a21c63;background:#f9e1ee;border-radius:9px;padding:12px;max-width:160px}
+.compact-crew{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #e2d9e5;border-radius:14px;padding:19px;min-height:124px;margin-bottom:4px}.compact-crew h3{font-size:19px!important;line-height:1.25;margin:0 0 8px;padding:0}.worker-icon{display:block;background:#f3edf4;color:#202741;border-radius:10px;min-width:65px;width:65px;padding:10px}.worker-icon svg{display:block;width:100%}.role-chip{display:inline-block;font-size:11px;font-weight:800;color:#49415c;background:#eae4f0;border-radius:5px;padding:3px 8px}.compact-crew p{font-size:13px;margin:8px 0 0;color:#263348}.ready-dot{display:inline-block;width:10px;height:10px;background:#2c9f55;border-radius:50%;margin-right:7px}
+[data-testid="stForm"]{padding:15px 18px;border-radius:13px}
+[data-testid="stForm"] [data-testid="stCheckbox"] p{font-size:13px}
+.progress-panel{margin:10px 0 0;padding:18px;min-height:170px}.progress-panel h4{font-size:21px;margin-bottom:24px}.progress-panel p{font-size:10px;margin-top:18px}.progress-strip li{font-size:10px}.next-panel{background:white;border:1px solid #e2d9e5;border-radius:14px;padding:18px;margin-top:10px;min-height:125px}.next-panel h4{font-size:21px;color:#171e3b;margin:0 0 12px}.next-panel p{font-size:16px;color:#263348;margin:0 0 10px}.next-panel small{font-size:10px;color:#687286}
+@media(max-width:1100px){.job-banner{flex-wrap:wrap}.job-description{flex-basis:65%}.job-window{max-width:none;flex:1}.job-badge{max-width:none}.product-header h1{font-size:30px}.product-header p{font-size:19px}.compact-crew{padding:14px;gap:10px}.worker-icon{min-width:45px;width:45px;padding:6px}.compact-crew h3{font-size:16px!important}}
+@media(max-width:700px){.product-header{padding:4px 12px 12px;gap:8px;flex-wrap:wrap}.product-header h1{font-size:28px}.product-badge{margin-left:0;font-size:9px}.job-icon{display:none}.job-description{flex-basis:100%}.job-description h3{font-size:19px!important}.job-banner{padding:15px}.progress-strip{gap:12px}.progress-strip li{flex-basis:26%}.progress-panel{min-height:0}.compact-crew{min-height:110px}}
+[data-testid="stTabs"] [role="tablist"]{display:none}
+[data-testid="stSidebar"] [data-testid="stRadioOption"]>div>div>div:first-child{display:none}
+[data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] button{color:white!important}
+[data-testid="stSidebar"] [data-testid="stRadioOption"]:focus-visible{outline:2px solid #f1b9d5}
+@media(min-width:650px) and (max-width:991px){[data-testid="stSidebar"][aria-expanded="true"]{min-width:190px;max-width:190px}[data-testid="stAppViewContainer"]:has([data-testid="stSidebar"][aria-expanded="true"]) [data-testid="stMain"]{left:190px;width:calc(100% - 190px)}[data-testid="stSidebar"] [data-testid="stSidebarUserContent"]{padding:1rem .7rem}[data-testid="stSidebar"] [data-testid="stRadio"] label{padding:9px 4px}.sidebar-brand{font-size:20px}.product-header h1{font-size:26px}.product-header p{font-size:17px}}
+
+[data-testid="stMainBlockContainer"]{padding-left:24px;padding-right:24px}
+[data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"]{display:block!important}
+.job-window{min-width:180px}.job-description h3{overflow-wrap:normal}
+@media(max-width:850px){.job-description{flex-basis:100%}.job-window{flex:1 1 180px}.job-badge{flex:1 1 150px}.product-header{flex-wrap:wrap}}
