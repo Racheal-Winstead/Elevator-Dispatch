@@ -96,7 +96,7 @@ def intake(tickets):
     rows=[]
     for t in tickets:
         errors=ticket_errors(t)
-        related=[x.ticket_id for x in tickets if x.ticket_id!=t.ticket_id and t.asset and x.asset==t.asset and abs(utc(x.created_at)-utc(t.created_at))<=timedelta(hours=24)]
+        related=[x.ticket_id for x in tickets if x.ticket_id!=t.ticket_id and t.asset and t.building and t.sector and x.asset==t.asset and x.building==t.building and x.sector==t.sector and abs(utc(x.created_at)-utc(t.created_at))<=timedelta(hours=24)]
         rows.append({'ticket_id':t.ticket_id,'data_status':'INVALID_TICKET_DATA' if 'INVALID_TICKET_DATA' in errors else 'OK','issues':', '.join(errors),'possible_dup_of':', '.join(related),'hazard_keyword':t.hazard_review})
     return feature_module('agents',load_engine()).intake_agent(rows)
 

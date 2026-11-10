@@ -74,10 +74,34 @@ def render(store,tickets,roster,rules,windows,actor,proposals,exceptions):
                     st.session_state.communication_success='Reply saved to shared history'+(' and work progress.' if apply else '. Progress was not changed.')
                     st.rerun()
                 except ValueError as e: st.error('Reply not saved: '+str(e))
-    with st.expander('Intake advice — same ticket records'):
+    with st.expander('Intake advice — selected work order',expanded=True):
         findings=bridge.intake(tickets)
-        st.dataframe(pd.DataFrame([{'Ticket':f['ticket_id'],'Flags':'; '.join(c+': '+detail for c,detail in f['flags'])} for f in findings]),hide_index=True,width='stretch')
-        st.caption('Flags do not confirm emergencies, merge complaints or change work records.')
+        finding=next((f for f in findings if f['ticket_id']==selected),None)
+        st.markdown('#### Intake review · '+selected)
+        if finding:
+            for code,detail in finding['flags']:
+                st.warning(code.replace('_',' ').title()+' · '+detail)
+                st.write('**Next human action:** '+bridge.explain(code)['next_action'])
+        else:
+            st.success('No intake flags found for this record.')
+            st.caption('Required intake fields pass; no matching elevator record was found at the same building and borough within 24 hours. Crew eligibility is checked separately.')
+        current=store.progress().get(selected,{})
+        status=current.get('status','UNASSIGNED')
+        st.write('**Saved workflow status:** '+status.replace('_',' ').title())
+        if current.get('next_action'): st.write('**Recorded next action:** '+current['next_action'])
+        elif status=='CLOSED': st.write('**Next workflow step:** Review the completed history and report.')
+        elif status=='RESTORED': st.write('**Next workflow step:** Review the supporting report before closing the record.')
+        elif status=='BLOCKED': st.write('**Next workflow step:** Review the recorded blocker and responsible owner before progressing the job.')
+        elif status in ('EN_ROUTE','ON_SITE','DIAGNOSING','REPAIRING'): st.write('**Next workflow step:** Record the next reported field update; verify the supporting report before marking service restored.')
+        elif status=='ACKNOWLEDGED': st.write('**Next workflow step:** Record the crew’s reported progress when available.')
+        elif assignment: st.write('**Next workflow step:** Review this crew’s message and acknowledgement before recording field progress.')
+        elif finding: st.write('**Next workflow step:** Review these intake flags before attempting assignment.')
+        else: st.write('**Next workflow step:** Review readiness, then confirm a complete crew on Dispatch plan.')
+        st.caption('Rule-based advice from the current records. It does not confirm emergencies, merge complaints, clear holds or change assignments.')
+        with st.expander('All intake findings'):
+            if findings:
+                st.dataframe(pd.DataFrame([{'Ticket':f['ticket_id'],'Flags':'; '.join(c+': '+detail for c,detail in f['flags'])} for f in findings]),hide_index=True,width='stretch')
+            else: st.caption('No intake flags found across the current source records.')
     with st.expander('Exception explanations — same scheduling results'):
         codes=sorted({code for values in exceptions.values() for code in values} | {'NO_ACK','CREW_UNAVAILABLE','ATTENDANCE_UNKNOWN'})
         code=st.selectbox('Explain reason code',codes,key='shared_explain_code')
