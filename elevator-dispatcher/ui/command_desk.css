@@ -65,3 +65,43 @@ div[data-testid="stMetric"]{border-top-color:#ae1764;box-shadow:0 4px 14px #2221
 [data-testid="stSidebar"] [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"]{display:block!important}
 .job-window{min-width:180px}.job-description h3{overflow-wrap:normal}
 @media(max-width:850px){.job-description{flex-basis:100%}.job-window{flex:1 1 180px}.job-badge{flex:1 1 150px}.product-header{flex-wrap:wrap}}
+/* Video-inspired review theme. Layout and application behavior are unchanged. */
+:root{color-scheme:dark;--navy:#0b0d13;--pink:#c346e9;--video-blue:#168cff;--video-ink:#eff3ff;--video-muted:#aab2c5;--video-line:#343b50}
+.stApp,[data-testid="stAppViewContainer"],[data-testid="stMain"]{background:#0b0d13!important;color:var(--video-ink)!important}
+[data-testid="stMain"]{background-image:radial-gradient(ellipse at 94% 2%,#4a147539,transparent 34%),radial-gradient(ellipse at 12% 0%,#004ca42e,transparent 35%)!important}
+[data-testid="stHeader"]{background:#0b0d13!important;color:#eff3ff!important}
+[data-testid="stToolbar"] button,[data-testid="stSidebarCollapseButton"] button,[data-testid="stSidebarCollapsedControl"] button{color:#e4eaff!important}
+[data-testid="stSidebar"]{background:linear-gradient(180deg,#0e1018,#111525 75%,#1d1430)!important;border-right:1px solid #303949}
+[data-testid="stSidebar"] :is(p,label,small,h1,h2,h3){color:#dce5f4!important}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked){background:linear-gradient(110deg,#096dce,#214b9a)!important;box-shadow:0 0 22px #137bff38,inset 2px 0 #49c4ff}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:hover{background:#202b43}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:focus-within{outline:2px solid #65c6ff}
+.desk-logo{padding:9px;border-radius:15px;background:linear-gradient(140deg,#00b4f4,#186bfa 52%,#c33dda);box-shadow:0 0 26px #347bff55;color:white}
+.desk-logo svg path:last-child{stroke:#fff}.sidebar-scene{color:#7661ca;background:linear-gradient(90deg,transparent 29%,#4f96d933 30%,transparent 31%,transparent 69%,#bd64ee33 70%,transparent 71%);border-color:#45445a}
+.sidebar-scene svg path:last-child,.header-art svg path:last-child{stroke:#a16bff}
+.product-header{border-left-color:#268fff;border-bottom-color:#344057}
+.product-header h1,.product-header p,[data-testid="stMain"] :is(h1,h2,h3,h4){color:#f3f6ff!important}
+.product-header p{color:#adb8cf!important}.product-badge{background:#351d37;color:#ffb4d8;border:1px solid #77364f}
+.header-art{color:#745aff;opacity:.18}
+.section-label{color:#71baff}.ticket-context,.crew-card,.job-banner,.compact-crew,.progress-panel,.next-panel,[data-testid="stForm"],div[data-testid="stMetric"]{background:#171a22!important;border-color:#343946!important;box-shadow:0 9px 28px #0004}
+.ticket-context{border-left-color:#238fff!important}.ticket-context strong,.job-description h3,.job-window strong,.compact-crew h3,.progress-panel h4,.next-panel h4{color:#f3f6ff!important}
+.ticket-context p,.job-description p,.job-description small,.crew-detail,.crew-reason,.crew-legend,.progress-panel p,.next-panel small{color:#b1bed3!important}
+.crew-legend b{color:#e4edff}.crew-reason{border-color:#343d50}.crew-card{border-top-color:#147fed!important}.crew-card.blocked{border-top-color:#5a6474!important}
+.crew-avatar,.worker-icon{background:#222c43!important;color:#8ccaff!important}.crew-role{color:#8abaff}.crew-status{background:#163a2e!important;color:#91eac1!important}.crew-status.blocked{background:#303541!important;color:#ced4e2!important}
+.job-icon{color:#29aaff;border-color:#3a4254}.job-window{background:#222733;color:#b8c8dd}.job-badge{background:#173d6a;color:#9bd7ff}
+.compact-crew p,.next-panel p{color:#d7e0ef}.role-chip{background:#243450;color:#b5d8ff}.ready-dot{background:#43da99}
+.progress-strip li{color:#abb7ca}.progress-strip li:before{background:#41475b}.step-dot{background:#171a22;border-color:#626f88}.progress-strip .current{color:#81caff}.current .step-dot{border-color:#218dff}
+[data-testid="stForm"] [data-testid="stTextInput"] input,[data-testid="stTextInput"] input,[data-testid="stTextArea"] textarea{background:#242936!important;color:#f2f5ff!important;border:1px solid #444d62!important}
+[data-testid="stSidebar"] input{color:#f2f5ff!important}
+[data-baseweb="select"]>div{background:#242936!important;color:#f1f5ff!important;border-color:#454e63!important}
+[data-baseweb="select"] *{color:#e7efff}
+[data-testid="stButton"] button,[data-testid="stDownloadButton"] button,[data-testid="stFormSubmitButton"] button{border-color:#47536c;color:#eef3ff}
+[data-testid="stButton"] button[kind="primary"],[data-testid="stFormSubmitButton"] button[kind="primaryFormSubmit"]{background:#087ff0!important;border-color:#1d9fff!important;color:white!important;box-shadow:0 0 18px #087ff055}
+[data-testid="stButton"] button[kind="primary"] p,[data-testid="stFormSubmitButton"] button p{color:inherit!important}
+[data-testid="stExpander"]{border-color:#343d50!important;background:#171a22!important}
+[data-testid="stCaptionContainer"] p{color:#b0bdd1!important}
+[data-testid="stAlert"]{border-radius:10px}
+[data-testid="stMain"] a{color:#77c1ff}
+[data-testid="stMain"] [data-testid="stCheckbox"] p,[data-testid="stMain"] label{color:#e3eafa}
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] p{line-height:1.5}
+[data-testid="stMetricValue"],[data-testid="stMetricLabel"]{color:#e7efff!important}
