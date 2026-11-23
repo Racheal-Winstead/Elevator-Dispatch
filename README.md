@@ -1,6 +1,40 @@
-# Elevator-Dispatch
+# Elevator Dispatch
 
-Elevator dispatcher-assistance demo — Racheal Winstead and Deshawn Jeter.
+NYCHA elevator dispatchers must coordinate Elevator Mechanics and Elevator Mechanic Helpers, record elevator performance and crew activity, and keep work-order information accurate across nights, weekends, and shift changes. When that information is incomplete or scattered, dispatchers can lose time, duplicate effort, or hand off unfinished work without a clear next step.
+
+Elevator Dispatch is a dispatcher-assistance tool that brings work orders, crew-readiness checks, assignment review, progress tracking, and shift handover into one clear workflow. The dispatcher remains responsible for reviewing and confirming every assignment.
+
+*Built by Racheal Winstead and Deshawn Jeter.*
+
+## Product Preview
+
+![Elevator Dispatch command desk showing the synthetic work-order board, crew status, and items needing attention](elevator-dispatcher/docs/console-preview.png)
+
+*The dispatcher command desk uses synthetic demonstration data and does not connect to live NYCHA systems.*
+
+## What It Does
+
+Elevator Dispatch gives dispatchers one place to see urgent work, match it to qualified crews, and hand off unfinished jobs without losing context. The dispatcher always reviews and confirms assignments.
+
+## Key Features
+
+- **Work Queue:** Organizes service requests by status, priority, borough, and intake readiness so dispatchers can quickly see which work order needs action next.
+- **Crew Readiness:** Checks attendance, role, qualifications, shift availability, and borough/depot authorization, and explains why each worker qualifies or is excluded.
+- **Dispatch Plan:** Recommends a complete mechanic-and-helper crew and work window, then requires dispatcher review and confirmation before anything is assigned.
+- **Progress & Exceptions:** Records status, blockers, owner, and next action in an append-only activity history so earlier information is not silently overwritten.
+- **Shift Handover & Messaging:** Carries unresolved work into the next shift and simulates assignment messages and crew acknowledgements without losing work-order context.
+
+## Tech Stack
+
+- **Python 3.11+:** Application logic, data models, validation, and scheduling integration
+- **Streamlit 1.61:** Interactive dispatcher console, navigation, and interface testing
+- **Pandas 3.0:** Work-order, roster, and scheduling-engine data transformation
+- **SQLite:** Local assignments, progress updates, audit history, and shift-handover records
+- **Custom Python data adapter:** Translates roster and work-order data for Deshawn's pinned scheduling engine
+- **Python `unittest` and Streamlit AppTest:** Workflow, adapter, safety-regression, and interface testing
+- **CSV export:** Assignment, exception, open-work, and handover reports
+
+> **Scope note:** This prototype uses synthetic sample data. It does not connect to an external API, live NYCHA/Maximo data, or an AI/LLM service.
 
 ## Racheal’s reviewed local implementation
 
